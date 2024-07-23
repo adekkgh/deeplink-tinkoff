@@ -8,5 +8,31 @@
 <body>
     <a href="sbolonline://payments/p2p-by-phone-number?phoneNumber=+79888320415">SBOL</a>
     <a href="">TINKOFF</a>
+    <p class="test"></p>
 </body>
 </html>
+
+<script>
+    let test = document.querySelector('.test');
+
+    function getCoordinates() {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                (position) => resolve({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                }),
+                (error) => reject(error)
+            );
+        });
+    }
+
+    getCoordinates()
+        .then(({ latitude, longitude }) => {
+            console.log(latitude, longitude);
+            test.textContent = `latitude: ${latitude} - longtitude: ${longitude}`;
+        })
+        .catch((error) => {
+            console.error('Error getting location:', error);
+        });
+</script>
